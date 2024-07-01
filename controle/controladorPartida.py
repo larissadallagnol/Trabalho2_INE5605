@@ -76,6 +76,7 @@ class ControladorPartida():
 
                 self.__partida_dao.add(nova_partida)
                 self.acrescentar_pontos(nova_partida)
+                self.__controlador_sistema.controlador_campeonato.classificacao()
                 numero_da_partida = numero_da_partida + 1
                 data_da_partida = data_da_partida + dt.timedelta(days=1)
         
