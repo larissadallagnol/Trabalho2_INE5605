@@ -28,7 +28,7 @@ class TelaEquipe():
     def pega_dados_equipe(self):
         print("--------- DADOS EQUIPES ---------")
         nome = input("Nome: ")
-        curso = int(input("Codigo-do-Curso: "))
+        curso = int(input("Codigo do Curso: "))
         lista_alunos = input("CPF's dos alunos: ")
         pontos = 0
         saldo_de_gols = 0

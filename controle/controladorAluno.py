@@ -3,6 +3,7 @@
 from entidade.aluno import Aluno
 from limite.telaAluno import TelaAluno
 from persistencia.alunoDAO import AlunoDAO
+from datetime import datetime
 
 class ControladorAluno():
     def __init__(self, controlador_sistema):
@@ -32,7 +33,8 @@ class ControladorAluno():
                 existe_aluno = True
         if existe_aluno is False:
             curso = self.__controlador_sistema.controlador_curso.busca_curso_por_codigo(dados_aluno["curso"])
-            novo_aluno = Aluno(dados_aluno["nome"], dados_aluno["cpf"], dados_aluno["data_de_nascimento"], 
+            data = datetime.strptime(dados_aluno["data_de_nascimento"], "%d/%m/%Y")
+            novo_aluno = Aluno(dados_aluno["nome"], dados_aluno["cpf"], data.date(), 
                                dados_aluno["matricula"], curso.nome)
             self.__aluno_dao.add(novo_aluno)
             self.__tela_aluno.mostra_mensagem("Aluno cadastrado com sucesso!")
@@ -51,7 +53,8 @@ class ControladorAluno():
                 curso = self.__controlador_sistema.controlador_curso.busca_curso_por_codigo(novos_dados_aluno["curso"])
                 aluno.nome = novos_dados_aluno["nome"]
                 aluno.cpf = novos_dados_aluno["cpf"]
-                aluno.data_de_nascimento = novos_dados_aluno["data_de_nascimento"]
+                data = datetime.strptime(novos_dados_aluno["data_de_nascimento"], "%d/%m/%Y")
+                aluno.data_de_nascimento = data.date()
                 aluno.matricula = novos_dados_aluno["matricula"]
                 aluno.curso = curso.nome
                 self.__aluno_dao.update(aluno)

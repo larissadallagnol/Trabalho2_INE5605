@@ -3,6 +3,7 @@
 from entidade.arbitro import Arbitro
 from limite.telaArbitro import TelaArbitro
 from persistencia.arbitroDAO import ArbitroDAO
+from datetime import datetime
 
 class ControladorArbitro():
     def __init__(self, controlador_sistema):
@@ -35,8 +36,9 @@ class ControladorArbitro():
             if arbitro.cpf == dados_arbitro["cpf"]:
                 existe_arbitro = True
         if existe_arbitro is False:
+            data = datetime.strptime(dados_arbitro["data_de_nascimento"], "%d/%m/%Y")
             novo_arbitro = Arbitro(dados_arbitro["nome"], dados_arbitro["cpf"], 
-                                   dados_arbitro["data_de_nascimento"], dados_arbitro["numero_partidas"])
+                                   data.date(), dados_arbitro["numero_partidas"])
             self.__arbitro_dao.add(novo_arbitro)
             self.__tela_arbitro.mostra_mensagem("Arbitro cadastrado com sucesso!")
         else:
@@ -53,7 +55,8 @@ class ControladorArbitro():
                 novos_dados_arbitro = self.__tela_arbitro.pega_dados_arbitro()
                 arbitro.nome = novos_dados_arbitro["nome"]
                 arbitro.cpf = novos_dados_arbitro["cpf"]
-                arbitro.data_de_nascimento = novos_dados_arbitro["data_de_nascimento"]
+                data = datetime.strptime(novos_dados_arbitro["data_de_nascimento"], "%d/%m/%Y")
+                arbitro.data_de_nascimento = data.date()
                 arbitro.numero_partidas = novos_dados_arbitro["numero_partidas"]
                 self.__arbitro_dao.update(arbitro)
                 self.__tela_arbitro.mostra_mensagem("Arbitro editado com sucesso!")

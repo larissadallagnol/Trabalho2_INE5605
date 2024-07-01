@@ -29,9 +29,9 @@ class TelaAluno():
         print("--------- DADOS ALUNO ---------")
         nome = input("Nome: ")
         cpf = input("CPF: ")
-        data_de_nascimento = input("Data-de-Nascimento: ")
+        data_de_nascimento = input("Data de Nascimento (DD/MM/AAA): ")
         matricula = input("Matricula: ")
-        curso = int(input("Codigo-do-Curso: "))
+        curso = int(input("Codigo do Curso: "))
 
         return {"nome": nome, "cpf": cpf, "data_de_nascimento": data_de_nascimento, "matricula": matricula, "curso": curso}
 

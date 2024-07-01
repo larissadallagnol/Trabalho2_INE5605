@@ -28,8 +28,8 @@ class TelaCampeonato():
     def pega_dados_campeonato(self):
         print("--------- DADOS CAMPEONATO ---------")
         nome = input("Nome: ")
-        lista_equipes = input("Nomes-das-Equipes (separados por vírgula): ")
-        lista_partidas = input("Codigo-das-partidas: ")
+        lista_equipes = input("Nomes das Equipes (separados por virgula): ")
+        lista_partidas = input("Codigo das partidas: ")
 
         return {"nome": nome, "lista_equipes": lista_equipes, "lista_partidas": lista_partidas}
 
