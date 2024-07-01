@@ -76,7 +76,6 @@ class ControladorPartida():
 
                 self.__partida_dao.add(nova_partida)
                 self.acrescentar_pontos(nova_partida)
-                self.__controlador_sistema.controlador_campeonato.classificacao()
                 numero_da_partida = numero_da_partida + 1
                 data_da_partida = data_da_partida + dt.timedelta(days=1)
         
@@ -84,7 +83,6 @@ class ControladorPartida():
 
     # Exclui uma partida existente
     def excluir_partida(self):
-        self.listar_partidas()
         if len(self.__partida_dao.get_all()) != 0:
             numero_partida = self.__tela_partida.seleciona_partida()
             partida = self.busca_partida_por_numero(numero_partida)
@@ -119,4 +117,4 @@ class ControladorPartida():
     def abre_tela(self):
         lista_opcoes = {0: self.finalizar, 1: self.registar_partidas, 2: self.excluir_partida, 3: self.listar_partidas}
         while True:
-            lista_opcoes[self.__tela_partida.mostra_tela_opcoes()]()
+            lista_opcoes[self.__tela_partida.tela_opcoes()]()

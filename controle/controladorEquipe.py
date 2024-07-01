@@ -40,6 +40,7 @@ class ControladorEquipe():
                     print("ATENCAO: Este aluno nao pertence ao curso da equipe!") 
             nova_equipe = Equipe(dados_equipe["nome"], curso_equipe.nome, alunos_equipe, dados_equipe["pontos"], dados_equipe["saldo_de_gols"])
             self.__equipe_dao.add(nova_equipe)
+            self.__tela_equipe.mostra_mensagem("Equipe cadastrada com sucesso!")
             for curso in self.__controlador_sistema.controlador_curso.cursos:
                 if curso.nome == curso_equipe.nome:
                     curso.equipes.append(nova_equipe.nome)
@@ -49,7 +50,6 @@ class ControladorEquipe():
 
     # Edita uma equipe existente
     def editar_equipe(self):
-        self.listar_equipes()
         if len(self.__equipe_dao.get_all()) != 0:
             nome_equipe = self.__tela_equipe.seleciona_equipe()
             equipe = self.busca_equipe_por_nome(nome_equipe)
@@ -76,7 +76,6 @@ class ControladorEquipe():
 
     # Exclui uma equipe existente
     def excluir_equipe(self):
-        self.listar_equipes()
         if len(self.__equipe_dao.get_all()) != 0:
             nome_equipe = self.__tela_equipe.seleciona_equipe()
             equipe = self.busca_equipe_por_nome(nome_equipe)
@@ -110,4 +109,4 @@ class ControladorEquipe():
         lista_opcoes = {0: self.finalizar, 1: self.cadastrar_equipe, 2: self.editar_equipe, 
                         3: self.excluir_equipe, 4: self.listar_equipes}
         while True:
-            lista_opcoes[self.__tela_equipe.mostra_tela_opcoes()]()
+            lista_opcoes[self.__tela_equipe.tela_opcoes()]()

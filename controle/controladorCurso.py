@@ -46,7 +46,6 @@ class ControladorCurso():
 
     # Edita um curso existente
     def editar_curso(self):
-        self.listar_cursos()
         if len(self.__curso_dao.get_all()) != 0:
             codigo_curso = self.__tela_curso.seleciona_curso()
             curso = self.busca_curso_por_codigo(codigo_curso)
@@ -67,7 +66,6 @@ class ControladorCurso():
 
     # Exclui um curso existente
     def excluir_curso(self):
-        self.listar_cursos()
         if len(self.__curso_dao.get_all()) != 0:
             codigo_curso = self.__tela_curso.seleciona_curso()
             curso = self.busca_curso_por_codigo(codigo_curso)
@@ -96,4 +94,4 @@ class ControladorCurso():
         lista_opcoes = {0: self.finalizar, 1: self.cadastrar_curso, 2: self.editar_curso, 
                         3: self.excluir_curso, 4: self.listar_cursos}
         while True:
-            lista_opcoes[self.__tela_curso.mostra_tela_opcoes()]()
+            lista_opcoes[self.__tela_curso.tela_opcoes()]()

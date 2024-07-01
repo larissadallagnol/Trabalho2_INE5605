@@ -32,7 +32,7 @@ class ControladorCampeonato():
         # Cria o dicionário de classificacao
         classificacao = {str(index + 1): equipe[0] for index, equipe in enumerate(equipes_pontos)}
 
-        return print(classificacao)
+        return classificacao
 
     # Cadastra um novo campeonato
     def cadastrar_campeonato(self):
@@ -60,7 +60,6 @@ class ControladorCampeonato():
 
     # Edita um campeonato existente
     def editar_campeonato(self):
-        self.listar_campeonatos()
         if len(self.__campeonato_dao.get_all()) != 0:
             nome_campeonato = self.__tela_campeonato.seleciona_campeonato()
             campeonato = self.busca_campeonato_por_nome(nome_campeonato)
@@ -85,7 +84,6 @@ class ControladorCampeonato():
 
     # Exclui um campeonato existente
     def excluir_campeonato(self):
-        self.listar_campeonatos()
         if len(self.__campeonato_dao.get_all()) != 0:
             nome_campeonato = self.__tela_campeonato.seleciona_campeonato()
             campeonato = self.busca_campeonato_por_nome(nome_campeonato)
@@ -114,4 +112,4 @@ class ControladorCampeonato():
     def abre_tela(self):
         lista_opcoes = {0: self.finalizar, 1: self.cadastrar_campeonato, 2: self.editar_campeonato, 3: self.excluir_campeonato, 4: self.listar_campeonatos}
         while True:
-            lista_opcoes[self.__tela_campeonato.mostra_tela_opcoes()]()
+            lista_opcoes[self.__tela_campeonato.tela_opcoes()]()

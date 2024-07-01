@@ -46,7 +46,6 @@ class ControladorArbitro():
 
     # Edita um arbitro existente
     def editar_arbitro(self):
-        self.listar_arbitros()
         if len(self.__arbitro_dao.get_all()) != 0:
             cpf_arbitro = self.__tela_arbitro.seleciona_arbitro()
             arbitro = self.busca_arbitro_por_cpf(cpf_arbitro)
@@ -65,7 +64,6 @@ class ControladorArbitro():
 
     # Exclui um arbitro existente
     def excluir_arbitro(self):
-        self.listar_arbitros()
         if len(self.__arbitro_dao.get_all()) != 0:
             cpf_arbitro = self.__tela_arbitro.seleciona_arbitro()
             arbitro = self.busca_arbitro_por_cpf(cpf_arbitro)
@@ -96,4 +94,4 @@ class ControladorArbitro():
         lista_opcoes = {0: self.finalizar, 1: self.cadastrar_arbitro, 2: self.editar_arbitro, 
                         3: self.excluir_arbitro, 4: self.listar_arbitros}
         while True:
-            lista_opcoes[self.__tela_arbitro.mostra_tela_opcoes()]()
+            lista_opcoes[self.__tela_arbitro.tela_opcoes()]()
