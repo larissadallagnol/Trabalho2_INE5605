@@ -12,3 +12,11 @@ class ArbitroDAO(DAO):
     def remove(self, arbitro: Arbitro):
         if isinstance(arbitro, Arbitro):
             super().remove(arbitro.cpf)
+
+    def update(self, arbitro: Arbitro):
+        if isinstance(arbitro, Arbitro):
+            for key, obj in self._DAO__cache.items():
+                if isinstance(obj, Arbitro) and obj.cpf == arbitro.cpf:
+                    super().update(key, arbitro)
+                    return
+            print(f"Arbitro com CPF {arbitro.cpf} não encontrado no cache.")

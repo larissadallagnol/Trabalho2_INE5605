@@ -12,3 +12,11 @@ class CursoDAO(DAO):
     def remove(self, curso: Curso):
         if isinstance(curso, Curso):
             super().remove(curso.codigo)
+
+    def update(self, curso: Curso):
+        if isinstance(curso, Curso):
+            for key, obj in self._DAO__cache.items():
+                if isinstance(obj, Curso) and obj.codigo == curso.codigo:
+                    super().update(key, curso)
+                    return
+            print(f"Curso com codigo {curso.codigo} não encontrado no cache.")

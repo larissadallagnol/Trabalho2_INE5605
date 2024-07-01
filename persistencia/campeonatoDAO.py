@@ -12,3 +12,11 @@ class CampeonatoDAO(DAO):
     def remove(self, campeonato: Campeonato):
         if isinstance(campeonato, Campeonato):
             super().remove(campeonato.nome)
+
+    def update(self, campeonato: Campeonato):
+        if isinstance(campeonato, Campeonato):
+            for key, obj in self._DAO__cache.items():
+                if isinstance(obj, Campeonato) and obj.nome == campeonato.nome:
+                    super().update(key, campeonato)
+                    return
+            print(f"Campeonato de nome {campeonato.nome} não encontrado no cache.")

@@ -22,10 +22,18 @@ class DAO(ABC):
         self.__dump()
 
     def remove(self, key):
-        try:
+        if key in self.__cache:
             self.__cache.pop(key)
-        except KeyError:
-            pass # depois retornar o erro pro controlador para a tela retornar uma mensaggem
+            self.__dump()
+        else:
+            raise KeyError(f"A chave {key} nao foi encontrada no cache.")
 
     def get_all(self):
         return list(self.__cache.values()) # values para retornar apenas os objetos, mantem a compatibilidade com os controladores
+
+    def update(self, key, obj):
+        if key in self.__cache:
+            self.__cache[key] = obj
+            self.__dump()
+        else:
+            raise KeyError(f"A chave {key} nao foi encontrada no cache.")

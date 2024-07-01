@@ -12,3 +12,11 @@ class AlunoDAO(DAO):
     def remove(self, aluno: Aluno):
         if isinstance(aluno, Aluno):
             super().remove(aluno.cpf)
+
+    def update(self, aluno: Aluno):
+        if isinstance(aluno, Aluno):
+            for key, obj in self._DAO__cache.items():
+                if isinstance(obj, Aluno) and obj.cpf == aluno.cpf:
+                    super().update(key, aluno)
+                    return
+            print(f"Aluno com CPF {aluno.cpf} não encontrado no cache.")
