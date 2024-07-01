@@ -7,6 +7,7 @@ from controle.controladorCurso import ControladorCurso
 from controle.controladorEquipe import ControladorEquipe
 from controle.controladorPartida import ControladorPartida
 from controle.controladorCampeonato import ControladorCampeonato
+from controle.controladorRelatorio import ControladorRelatorio
 
 class ControladorSistema:
     def __init__(self):
@@ -16,6 +17,7 @@ class ControladorSistema:
         self.__controlador_equipe = ControladorEquipe(self)
         self.__controlador_partida = ControladorPartida(self)
         self.__controlador_campeonato = ControladorCampeonato(self)
+        self.__controlador_relatorio = ControladorRelatorio(self)
         self.__tela_sistema = TelaSistema()
 
     @property
@@ -42,20 +44,6 @@ class ControladorSistema:
     def controlador_campeonato(self):
         return self.__controlador_campeonato
     
-    def gerar_relatorio_ganhadores(self):
-        print("Classificacao do campeonato:")
-        print(self.cadastra_campeonatos.classificacao())
-        print("A equipe ganhadora do campeonato é a: ")
-    
-    def gerar_relatorio_equipe_fez_mais_gols(self):
-        return
-    
-    def gerar_relatorio_equipe_levou_mais_gols(self):
-        return
-    
-    def gerar_relatorio_jogadores_mais_gols(self):
-        return
-
     def iniciar_sistema(self):
         self.abre_tela()
 
@@ -77,12 +65,15 @@ class ControladorSistema:
     def cadastra_campeonatos(self):
         self.__controlador_campeonato.abre_tela()
 
+    def gera_relatorios(self):
+        self.__controlador_relatorio.abre_tela()
+
     def encerra_sistema(self):
         exit(0)
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastra_cursos, 2: self.cadastra_alunos, 3: self.cadastra_arbitros, 4: self.cadastra_equipes, 
-                        5: self.cadastra_partidas, 6: self.cadastra_campeonatos, 0: self.encerra_sistema}
+                        5: self.cadastra_partidas, 6: self.cadastra_campeonatos, 7: self.gera_relatorios, 0: self.encerra_sistema}
 
         while True:
             opcao_escolhida = self.__tela_sistema.tela_opcoes()

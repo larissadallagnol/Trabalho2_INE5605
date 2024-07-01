@@ -5,7 +5,7 @@ from entidade.curso import Curso
 import datetime
 
 class Aluno(AbstractPessoa):
-    def __init__(self, nome: str, cpf :int, data_de_nascimento: datetime.date, matricula: str, curso: Curso):
+    def __init__(self, nome: str, cpf: str, data_de_nascimento: datetime.date, matricula: str, curso: Curso):
         super().__init__(nome, cpf, data_de_nascimento)
         self.__matricula = matricula
         self.__curso = curso

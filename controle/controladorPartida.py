@@ -4,24 +4,25 @@ from entidade.partida import Partida
 from limite.telaPartida import TelaPartida
 import datetime as dt
 import random
+from persistencia.partidaDAO import PartidaDAO
 
 class ControladorPartida():
     def __init__(self, controlador_sistema):
         self.__tela_partida = TelaPartida()
-        self.__partidas = []
+        self.__partida_dao = PartidaDAO()
         self.__controlador_sistema = controlador_sistema
     
     @property
     def partidas(self):
-        return self.__partidas
+        return self.__partida_dao.get_all()
     
     @partidas.setter
     def partidas(self, partidas):
-        self.__partidas = partidas
+        self.__partida_dao = partidas
 
     # Busca uma partida pelo numero dela
     def busca_partida_por_numero(self, numero: str):
-        for partida in self.__partidas:
+        for partida in self.__partida_dao.get_all():
             if partida.numero == numero:
                 return partida
         return None
@@ -73,7 +74,7 @@ class ControladorPartida():
                 nova_partida = Partida(int(numero_da_partida), data_da_partida, equipe_um.nome, equipe_dois.nome, 
                                        arbitro.nome, gols_primeira_equipe, gols_segunda_equipe)
 
-                self.__partidas.append(nova_partida)
+                self.__partida_dao.add(nova_partida)
                 self.acrescentar_pontos(nova_partida)
                 self.__controlador_sistema.controlador_campeonato.classificacao()
                 numero_da_partida = numero_da_partida + 1
@@ -83,26 +84,26 @@ class ControladorPartida():
 
     # Exclui uma partida existente
     def excluir_partida(self):
-        self.listar_partidas()
-        numero_partida = self.__tela_partida.seleciona_partida()
-        partida = self.busca_partida_por_numero(numero_partida)
+        if len(self.__partida_dao.get_all()) != 0:
+            numero_partida = self.__tela_partida.seleciona_partida()
+            partida = self.busca_partida_por_numero(numero_partida)
 
-        if partida is not None:
-            self.decrementar_pontos(partida)
-            primeira_equipe = self.__controlador_sistema.controlador_equipe.busca_equipe_por_nome(partida.primeira_equipe)
-            segunda_equipe = self.__controlador_sistema.controlador_equipe.busca_equipe_por_nome(partida.segunda_equipe)
-            primeira_equipe.saldo_de_gols -= partida.gols_primeira_equipe
-            segunda_equipe.saldo_de_gols -= partida.gols_segunda_equipe
-            self.__partidas.remove(partida)
-            self.__tela_partida.mostra_mensagem("Partida excluida!")
-        else:
-            self.__tela_partida.mostra_mensagem("ATENCAO: Esta partida nao existe!")
+            if partida is not None:
+                self.decrementar_pontos(partida)
+                primeira_equipe = self.__controlador_sistema.controlador_equipe.busca_equipe_por_nome(partida.primeira_equipe)
+                segunda_equipe = self.__controlador_sistema.controlador_equipe.busca_equipe_por_nome(partida.segunda_equipe)
+                primeira_equipe.saldo_de_gols -= partida.gols_primeira_equipe
+                segunda_equipe.saldo_de_gols -= partida.gols_segunda_equipe
+                self.__partida_dao.remove(partida)
+                self.__tela_partida.mostra_mensagem("Partida excluida!")
+            else:
+                self.__tela_partida.mostra_mensagem("ATENCAO: Esta partida nao existe!")
 
     # Lista as partidas existentes no campeonato
     def listar_partidas(self):
-        if len(self.__partidas) != 0:
+        if len(self.__partida_dao.get_all()) != 0:
             self.__tela_partida.mostra_mensagem("Partidas cadastradas:")
-            for partida in self.__partidas:
+            for partida in self.__partida_dao.get_all():
                 self.__tela_partida.mostra_partida({"numero": partida.numero, "data": partida.data, "primeira_equipe": partida.primeira_equipe, 
                                                     "segunda_equipe": partida.segunda_equipe, "arbitro": partida.arbitro, "gols_primeira_equipe": partida.gols_primeira_equipe, 
                                                     "gols_segunda_equipe": partida.gols_segunda_equipe})
@@ -117,4 +118,4 @@ class ControladorPartida():
     def abre_tela(self):
         lista_opcoes = {0: self.finalizar, 1: self.registar_partidas, 2: self.excluir_partida, 3: self.listar_partidas}
         while True:
-            lista_opcoes[self.__tela_partida.mostra_tela_opcoes()]()
+            lista_opcoes[self.__tela_partida.tela_opcoes()]()
